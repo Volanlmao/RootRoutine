@@ -46,7 +46,7 @@ export default function PlantDetail() {
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
-        <ActivityIndicator size="large" color="#4CAF50" />
+        <ActivityIndicator size="large" className="text-green-800" />
       </View>
     );
   }
@@ -64,12 +64,11 @@ export default function PlantDetail() {
       {plantDetails.default_image?.original_url && (
         <Image
           source={{ uri: plantDetails.default_image.original_url }}
-          className="w-full h-64 rounded-lg mb-4"
-          resizeMode="cover"
+          className="w-full h-64 rounded-lg mb-4 object-cover"
         />
       )}
 
-      <Text className="text-2xl font-bold text-green-800 mb-1">
+      <Text className="text-2xl font-bold text-green-700 mb-1">
         {plantDetails.common_name || "Unnamed Plant"}
       </Text>
       <Text className="text-lg text-gray-500 mb-4">
@@ -81,7 +80,7 @@ export default function PlantDetail() {
         {/* descr */}
         {careGuide ? (
           <View className="mt-6">
-            <Text className="text-xl font-bold text-green-800 mb-2">Description</Text>
+            <Text className="text-xl font-bold text-green-700 mb-2">Description</Text>
             {careGuide.section?.map((section: any, index: number) => (
               <View key={index} className="mb-3">
                 <Text className="font-semibold text-green-700">{section.type}</Text>
@@ -104,7 +103,7 @@ export default function PlantDetail() {
 
         {/* info */}
         <View>
-          <Text className="text-xl font-bold text-green-800 mb-1">Overview</Text>
+          <Text className="text-xl font-bold text-green-700 mb-1">Overview</Text>
           <Text>Type: {plantDetails.type}</Text>
           <Text>Cycle: {plantDetails.cycle}</Text>
           <Text>Care Level: {plantDetails.care_level}</Text>
@@ -127,7 +126,7 @@ export default function PlantDetail() {
 
         {/* water */}
         <View>
-          <Text className="text-xl font-bold text-blue-700 mb-1">Watering</Text>
+          <Text className="text-xl font-bold text-green-700 mb-1">Watering</Text>
           <Text>Frequency: {plantDetails.watering}</Text>
         </View>
 
@@ -138,7 +137,7 @@ export default function PlantDetail() {
 
         {/* sun */}
         <View>
-          <Text className="text-xl font-bold text-yellow-700 mb-1">Sunlight</Text>
+          <Text className="text-xl font-bold text-green-700 mb-1">Sunlight</Text>
           {Array.isArray(plantDetails.sunlight) && (
             <Text>{plantDetails.sunlight.join(", ")}</Text>
           )}
@@ -155,18 +154,18 @@ export default function PlantDetail() {
 
         {/* reproduction */}
         <View>
-          <Text className="text-xl font-bold text-purple-700 mb-1">Reproduction</Text>
+          <Text className="text-xl font-bold text-green-700 mb-1">Reproduction</Text>
           {Array.isArray(plantDetails.pruning_month) && (
             <Text>Prune in: {plantDetails.pruning_month.join(", ")}</Text>
           )}
           {Array.isArray(plantDetails.propagation) && (
-            <Text>Propagation: {plantDetails.propagation.join(", ")}</Text>
+            <Text>Reproduction: {plantDetails.propagation.join(", ")}</Text>
           )}
         </View>
 
         {/* extra */}
         <View>
-          <Text className="text-xl font-bold text-gray-800 mb-1">Additional Info</Text>
+          <Text className="text-xl font-bold text-green-700 mb-1">Additional Info</Text>
           <Text>Medicinal: {plantDetails.medicinal ? "Yes" : "No"}</Text>
           <Text>Poisonous to humans: {plantDetails.poisonous_to_humans ? "Yes" : "No"}</Text>
           <Text>Poisonous to pets: {plantDetails.poisonous_to_pets ? "Yes" : "No"}</Text>

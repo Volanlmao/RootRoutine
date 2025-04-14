@@ -50,7 +50,7 @@ export default function Index() {
       </Text>
 
       <TextInput
-        className="border border-gray-300 rounded-lg p-3 mb-4"
+        className="border border-gray-500 rounded-lg p-3 mb-4"
         placeholder="Search for a plant..."
         onChangeText={setQ}
         value={q}
