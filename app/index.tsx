@@ -6,12 +6,11 @@ import {
   FlatList,
   Image,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import icons from "@/constants/icons";
-import perenualApi, { ApiToken } from "@/backend/perenualApi";
+import { perenualApi, ApiToken } from "@/backend/perenualApi";
 import { Link } from "expo-router";
-
 
 export default function Index() {
   const [q, setQ] = useState("");

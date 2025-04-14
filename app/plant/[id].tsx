@@ -1,31 +1,46 @@
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native";
-import perenualApi, { ApiToken } from "@/backend/perenualApi";
-
+import { View, Text, ScrollView, Image, ActivityIndicator } from "react-native";
+import { ApiToken, perenualApi, perenualGuideApi } from "@/backend/perenualApi";
 
 export default function PlantDetail() {
-  const { id } = useLocalSearchParams(); 
-  const [plant, setPlant] = useState<any>(null);
+  const { id } = useLocalSearchParams();
+  const [plantDetails, setPlantDetails] = useState<any>(null);
+  const [careGuide, setCareGuide] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchPlantDetails = async () => {
     try {
       const response = await perenualApi.get(`/species/details/${id}`, {
+        params: { key: ApiToken },
+      });
+      setPlantDetails(response.data);
+    } catch (e) {
+      console.error("Error fetching plant details:", (e as Error).message);
+    }
+  };
+
+  const fetchPlantGuides = async () => {
+    try {
+      const response = await perenualGuideApi.get("/species-care-guide-list", {
         params: {
           key: ApiToken,
+          species_id: parseInt(id as string),
         },
       });
-      setPlant(response.data);
-    } catch (e) {
-      console.error("Error fetching plant details:", e.message);
-    } finally {
-      setLoading(false);
+      setCareGuide(response.data.data?.[0]);
+    } catch (e: any) {
+      console.error("Guide fetch error:", e.response?.data || e.message);
     }
   };
 
   useEffect(() => {
-    fetchPlantDetails();
+    const fetchAll = async () => {
+      await fetchPlantDetails();
+      await fetchPlantGuides();
+      setLoading(false);
+    };
+    fetchAll();
   }, [id]);
 
   if (loading) {
@@ -36,7 +51,7 @@ export default function PlantDetail() {
     );
   }
 
-  if (!plant) {
+  if (!plantDetails) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
         <Text className="text-red-500">Plant not found</Text>
@@ -46,40 +61,121 @@ export default function PlantDetail() {
 
   return (
     <ScrollView className="flex-1 bg-white px-4 pt-12">
-      {plant.default_image?.original_url && (
+      {plantDetails.default_image?.original_url && (
         <Image
-          source={{ uri: plant.default_image.original_url }}
+          source={{ uri: plantDetails.default_image.original_url }}
           className="w-full h-64 rounded-lg mb-4"
           resizeMode="cover"
         />
       )}
 
       <Text className="text-2xl font-bold text-green-800 mb-1">
-        {plant.common_name || "Unnamed Plant"}
+        {plantDetails.common_name || "Unnamed Plant"}
       </Text>
-      <Text className="text-lg italic text-gray-600 mb-4">
-        {plant.scientific_name}
-      </Text>
-
-      <Text className="text-base mb-2">
-        <Text className="font-semibold text-green-700">Watering: </Text>
-        {plant.watering}
+      <Text className="text-lg text-gray-500 mb-4">
+        {plantDetails.scientific_name?.join(", ")}
       </Text>
 
-      <Text className="text-base mb-2">
-        <Text className="font-semibold text-green-700">Sunlight: </Text>
-        {plant.sunlight?.join(", ")}
-      </Text>
+      <View className="space-y-4">
 
-      <Text className="text-base mb-2">
-        <Text className="font-semibold text-green-700">Cycle: </Text>
-        {plant.cycle}
-      </Text>
+        {/* descr */}
+        {careGuide ? (
+          <View className="mt-6">
+            <Text className="text-xl font-bold text-green-800 mb-2">Description</Text>
+            {careGuide.section?.map((section: any, index: number) => (
+              <View key={index} className="mb-3">
+                <Text className="font-semibold text-green-700">{section.type}</Text>
+                <Text className="text-gray-700">{section.description}</Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text className="text-gray-500 mt-4">
+            No care guide available for this plant.
+          </Text>
+        )}
 
-      <Text className="text-base mb-6">
-        <Text className="font-semibold text-green-700">Propagation: </Text>
-        {plant.propagation?.join(", ") || "Unknown"}
-      </Text>
+
+
+
+
+
+        
+
+        {/* info */}
+        <View>
+          <Text className="text-xl font-bold text-green-800 mb-1">Overview</Text>
+          <Text>Type: {plantDetails.type}</Text>
+          <Text>Cycle: {plantDetails.cycle}</Text>
+          <Text>Care Level: {plantDetails.care_level}</Text>
+          <Text>Growth Rate: {plantDetails.growth_rate}</Text>
+          {plantDetails.dimensions?.min_value && (
+            <Text>
+              Size: {plantDetails.dimensions.min_value}-{plantDetails.dimensions.max_value} {plantDetails.dimensions.unit}
+            </Text>
+          )}
+        </View>
+
+
+
+
+
+
+
+
+
+
+        {/* water */}
+        <View>
+          <Text className="text-xl font-bold text-blue-700 mb-1">Watering</Text>
+          <Text>Frequency: {plantDetails.watering}</Text>
+        </View>
+
+
+
+
+
+
+        {/* sun */}
+        <View>
+          <Text className="text-xl font-bold text-yellow-700 mb-1">Sunlight</Text>
+          {Array.isArray(plantDetails.sunlight) && (
+            <Text>{plantDetails.sunlight.join(", ")}</Text>
+          )}
+        </View>
+
+
+
+
+
+
+
+
+
+
+        {/* reproduction */}
+        <View>
+          <Text className="text-xl font-bold text-purple-700 mb-1">Reproduction</Text>
+          {Array.isArray(plantDetails.pruning_month) && (
+            <Text>Prune in: {plantDetails.pruning_month.join(", ")}</Text>
+          )}
+          {Array.isArray(plantDetails.propagation) && (
+            <Text>Propagation: {plantDetails.propagation.join(", ")}</Text>
+          )}
+        </View>
+
+        {/* extra */}
+        <View>
+          <Text className="text-xl font-bold text-gray-800 mb-1">Additional Info</Text>
+          <Text>Medicinal: {plantDetails.medicinal ? "Yes" : "No"}</Text>
+          <Text>Poisonous to humans: {plantDetails.poisonous_to_humans ? "Yes" : "No"}</Text>
+          <Text>Poisonous to pets: {plantDetails.poisonous_to_pets ? "Yes" : "No"}</Text>
+          <Text>Indoor: {plantDetails.indoor ? "Yes" : "No"}</Text>
+          <Text>Drought tolerant: {plantDetails.drought_tolerant ? "Yes" : "No"}</Text>
+        </View>
+
+        
+      </View>
     </ScrollView>
   );
 }
