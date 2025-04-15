@@ -65,7 +65,7 @@ const SignIn = () => {
 
         <View className="w-full mb-4">
           <TextInput
-            className={`w-full p-4 rounded-lg bg-gray-50 text-[#448f49] border border-[#448f49] ${
+            className={`w-full p-4 rounded-lg bg-[#05212A] text-[#448f49] border border-[#448f49] ${
               name
                 ? usernameValid
                   ? "border-green-500"
@@ -86,7 +86,7 @@ const SignIn = () => {
 
         <View className="w-full mb-4">
           <TextInput
-            className={`w-full p-4 rounded-lg bg-gray-50 text-[#448f49] border border-[#448f49] ${
+            className={`w-full p-4 rounded-lg bg-[#05212A] text-[#448f49] border border-[#448f49] ${
               email
                 ? emailValid
                   ? "border-green-500"
@@ -106,7 +106,7 @@ const SignIn = () => {
         <View className="w-full mb-4">
           <View className="relative">
             <TextInput
-              className={`w-full p-4 rounded-lg bg-gray-50 text-[#448f49] border border-[#448f49]  ${
+              className={`w-full p-4 rounded-lg bg-[#05212A] text-[#448f49] border border-[#448f49]  ${
                 password
                   ? passwordValid
                     ? "border-green-500"
@@ -139,7 +139,7 @@ const SignIn = () => {
         <TouchableOpacity
           className={`w-full p-4 rounded-lg ${
             usernameValid && passwordValid && emailValid
-              ? "bg-[#020808]"
+              ? "bg-[#05212A]"
               : "bg-gray-500"
           }`}
           onPress={handleSignIn}

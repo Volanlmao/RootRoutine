@@ -50,7 +50,7 @@ const login = () => {
 
       <View className="relative w-[90%]">
         <TextInput
-          className="w-full p-4 rounded-lg bg-gray-50 text-[#448f49] border border-[#448f49]"
+          className="w-full p-4 rounded-lg bg-[#05212A] text-[#448f49] border border-[#448f49]"
           placeholder="Email..."
           placeholderTextColor="#9CA3AF"
           value={email}
@@ -60,7 +60,7 @@ const login = () => {
 
       <View className="relative w-[90%]">
         <TextInput
-          className="w-full p-4 rounded-lg bg-gray-50 text-[#448f49] border border-[#448f49]"
+          className="w-full p-4 rounded-lg bg-[#05212A] text-[#448f49] border border-[#448f49]"
           placeholder="Password..."
           placeholderTextColor="#9CA3AF"
           secureTextEntry={!showPassword}
@@ -78,7 +78,7 @@ const login = () => {
       </View>
 
       <TouchableOpacity
-        className={`bg-[#020808] px-7 rounded-lg py-4 w-[90%]`}
+        className={`bg-[#05212A] px-7 rounded-lg py-4 w-[90%]`}
         onPress={handleLogin}
       >
         <Text className="text-white text-xl text-center">Login</Text>

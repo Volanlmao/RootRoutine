@@ -27,25 +27,25 @@ const index = () => {
       <Image source={icons.logo} className="mb-10 h-[250px] w-[250px]" />
 
         <Text className="text-[#448f49] font-bold text-[42px]">Welcome</Text>
-        <Text className="text-[#020808] text-[20px] mb-8 font-semibold">Nurture every <Text className="text-[#448f49] text-[20px] mb-8 font-semibold">leaf</Text></Text>
+        <Text className="text-[#05212A] text-[20px] mb-8 font-semibold">Nurture every <Text className="text-[#448f49] text-[20px] mb-8 font-semibold">leaf</Text></Text>
   
-        <TouchableOpacity className="mt-2 bg-[#020808] px-7 py-4 w-[90%] rounded-lg">
-          <Link href={"/sign-in"} className="text-[#fdddbd] text-xl text-center">
+        <TouchableOpacity className="mt-2 bg-[#05212A] px-7 py-4 w-[90%] rounded-lg">
+          <Link href={"/sign-in"} className="text-[#448f49] text-xl text-center">
             Create Account
           </Link>
         </TouchableOpacity>
   
-        <TouchableOpacity className="mt-2 bg-[#020808] px-7 py-4 w-[90%] rounded-lg">
-          <Link href={"/login"} className="text-[#fdddbd] text-xl text-center">
+        <TouchableOpacity className="mt-2 bg-[#05212A] px-7 py-4 w-[90%] rounded-lg">
+          <Link href={"/login"} className="text-[#448f49] text-xl text-center">
             Login
           </Link>
         </TouchableOpacity>
   
         <TouchableOpacity
-          className="mt-2 bg-[#020808] px-7 py-4 w-[90%] rounded-lg"
+          className="mt-2 bg-[#05212A] px-7 py-4 w-[90%] rounded-lg"
           onPress={handleSignInGoogle}
         >
-          <Text className="text-[#fdddbd] text-xl text-center">Login with Google</Text>
+          <Text className="text-[#448f49] text-xl text-center">Login with Google</Text>
         </TouchableOpacity>
         
       </SafeAreaView>
