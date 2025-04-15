@@ -1,95 +1,55 @@
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  Image,
-  ActivityIndicator,
-  TouchableOpacity,
-} from "react-native";
 import icons from "@/constants/icons";
-import { perenualApi, ApiToken } from "@/backend/perenualApi";
-import { Link } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Link, router } from "expo-router";
+import { login} from "@/backend/appwrite";
+import { useAppwriteContext } from "@/backend/appwriteContextProvider";
+const index = () => {
 
-export default function Index() {
-  const [q, setQ] = useState("");
-  const [plants, setPlants] = useState([]);
-  const [loading, setLoading] = useState(false);
+    const { loading, isLoggedIn } = useAppwriteContext();
+    
+    useEffect(() => {
+      if (!loading && isLoggedIn) return router.replace("/main");
+    });
+  
+    const handleSignInGoogle = async () => {
+      const result = await login();
+      if (result) {
+        router.replace("/(tabs)/main");
+      } else {
+        Alert.alert("Error");
+      }
+    };
+  
+    return (
+      <SafeAreaView className="flex-1 justify-center items-center bg-[#fdddbd]">
+      <Image source={icons.logo} className="mb-10 h-[250px] w-[250px]" />
 
-  const searchPlants = async (input: string) => {
-    try {
-      setLoading(true);
-      const response = await perenualApi.get("/species-list", {
-        params: {
-          key: ApiToken,
-          q: input,
-        },
-      });
-      setPlants(response.data.data);
-    } catch (e: any) {
-      console.error("Api err:", e.message);
-    } finally {
-      setLoading(false);
-    }
+        <Text className="text-[#448f49] font-bold text-[42px]">Welcome</Text>
+        <Text className="text-[#020808] text-[20px] mb-8 font-semibold">Nurture every <Text className="text-[#448f49] text-[20px] mb-8 font-semibold">leaf</Text></Text>
+  
+        <TouchableOpacity className="mt-2 bg-[#020808] px-7 py-4 w-[90%] rounded-lg">
+          <Link href={"/sign-in"} className="text-[#fdddbd] text-xl text-center">
+            Create Account
+          </Link>
+        </TouchableOpacity>
+  
+        <TouchableOpacity className="mt-2 bg-[#020808] px-7 py-4 w-[90%] rounded-lg">
+          <Link href={"/login"} className="text-[#fdddbd] text-xl text-center">
+            Login
+          </Link>
+        </TouchableOpacity>
+  
+        <TouchableOpacity
+          className="mt-2 bg-[#020808] px-7 py-4 w-[90%] rounded-lg"
+          onPress={handleSignInGoogle}
+        >
+          <Text className="text-[#fdddbd] text-xl text-center">Login with Google</Text>
+        </TouchableOpacity>
+        
+      </SafeAreaView>
+    );
   };
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (q.length > 2) searchPlants(q);
-      else setPlants([]);
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [q]);
-
-  return (
-    <View className="flex-1 bg-white px-4 pt-12">
-      <Text className="text-2xl font-bold text-green-700 mb-4">
-        <Image source={icons.logo} className="h-[15px] w-[15px]" /> RootRoutine
-      </Text>
-
-      <TextInput
-        className="border border-gray-500 rounded-lg p-3 mb-4"
-        placeholder="Search for a plant..."
-        onChangeText={setQ}
-        value={q}
-      />
-
-      {loading ? (
-        <ActivityIndicator size="large" className="text-green-800" />
-      ) : (
-        <FlatList
-          data={plants}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Link href={`/plant/${item.id}`} asChild>
-              <TouchableOpacity>
-                <View className="mb-4 flex-row items-center gap-4">
-                  {item.default_image?.small_url ? (
-                    <Image
-                      source={{ uri: item.default_image.small_url }}
-                      className="w-16 h-16 rounded"
-                    />
-                  ) : (
-                    <View className="w-16 h-16 bg-gray-200 rounded items-center justify-center">
-                      <Text className="text-xs text-gray-500">No Image</Text>
-                    </View>
-                  )}
-                  <View>
-                    <Text className="text-lg font-semibold text-green-700">
-                      {item.common_name}
-                    </Text>
-                    <Text className="text-sm text-gray-500">
-                      {item.scientific_name}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </Link>
-          )}
-        />
-      )}
-    </View>
-  );
-}
+export default index
