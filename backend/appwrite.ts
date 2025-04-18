@@ -10,6 +10,9 @@ const client = new Client()
 export const database = new Databases(client);
 export const account = new Account(client);
 export const avatars = new Avatars(client);
+export const databaseId = "68026d4e000908ce7db9";
+export const blogsId = "68026d530022ba0f3080";
+
 
 export async function login() {
     try {

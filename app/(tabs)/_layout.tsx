@@ -17,8 +17,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="main"
         options={{
-          title: "Home",
-          tabBarIcon: ({ focused, color }) => (
+          title: "Blog",
+          tabBarIcon: ({ focused }) => (
             <Ionicons
               name={"home"}
               size={24}
@@ -27,7 +27,7 @@ export default function TabsLayout() {
           ),
           tabBarLabel: ({ focused }) => (
             <Text className={`text-sm ${focused ? "text-[#448f49]" : "text-[#cecece]"}`}>
-              Home
+              Blog
             </Text>
           ),
         }}
@@ -36,8 +36,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: "search",
-          tabBarIcon: ({ focused, color }) => (
+          title: "Search",
+          tabBarIcon: ({ focused }) => (
             <Ionicons
               name={"search-sharp"}
               size={24}
@@ -46,16 +46,17 @@ export default function TabsLayout() {
           ),
           tabBarLabel: ({ focused }) => (
             <Text className={`text-sm ${focused ? "text-[#448f49]" : "text-[#cecece]"}`}>
-              Home
+              Search
             </Text>
           ),
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
-          title: "profile",
-          tabBarIcon: ({ focused, color }) => (
+          title: "Profile",
+          tabBarIcon: ({ focused }) => (
             <Ionicons
               name={"person-circle-sharp"}
               size={24}
@@ -64,7 +65,7 @@ export default function TabsLayout() {
           ),
           tabBarLabel: ({ focused }) => (
             <Text className={`text-sm ${focused ? "text-[#448f49]" : "text-[#cecece]"}`}>
-              Home
+              Profile
             </Text>
           ),
         }}
