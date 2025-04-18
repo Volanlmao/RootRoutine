@@ -77,6 +77,7 @@ export default function PlantDetail() {
         <Ionicons name="arrow-back" size={26} color="#448f49" />
         <Text className="ml-2 text-[#448f49] text-base">Back</Text>
       </TouchableOpacity>
+      
       <ScrollView className="flex-1 px-4 pt-24 bg-[#fdddbd]">
         {plantDetails.default_image?.original_url && (
           <Image

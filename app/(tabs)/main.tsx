@@ -76,7 +76,7 @@ const Blog = () => {
                   resizeMode="cover"
                 />
               ) : (
-                <View className="w-full h-24 rounded bg-gray-200 justify-center items-center mb-2">
+                <View className="w-full h-24 rounded bg-black justify-center items-center mb-2">
                   <Text className="text-gray-500 text-sm">No Image</Text>
                 </View>
               )}

@@ -48,7 +48,7 @@ const BlogDetail = () => {
   }
 
   return (
-    <View className="flex-1 bg-white relative">
+    <View className="flex-1 bg-[#fdddbd] relative">
       <TouchableOpacity
         onPress={() => router.back()}
         className="absolute top-10 left-4 z-50 flex-row items-center"
@@ -67,8 +67,8 @@ const BlogDetail = () => {
         )}
 
         <Text className="text-3xl font-bold text-[#448f49] mb-2">{blog.title}</Text>
-        <Text className="text-sm italic text-gray-500">{`by ${blog.author}`}</Text>
-        <Text className="text-xs text-gray-400 mb-4">
+        <Text className="text-sm ">{`by ${blog.author}`}</Text>
+        <Text className="text-xs mb-4">
           Posted on {new Date(blog.$createdAt).toLocaleDateString()}
         </Text>
 

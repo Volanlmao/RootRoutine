@@ -14,6 +14,8 @@ import { database, databaseId, blogsId } from "@/backend/appwrite";
 import { ID } from "react-native-appwrite";
 import { router } from "expo-router";
 import { getUser } from "@/backend/appwrite";
+import { Ionicons } from "@expo/vector-icons";
+
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -24,7 +26,7 @@ const CreateBlog = () => {
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
-      quality: 0.7,
+      quality: 1,
     });
 
     if (!result.canceled && result.assets.length > 0) {
@@ -34,7 +36,7 @@ const CreateBlog = () => {
 
   const handleCreateBlog = async () => {
     if (!title || !content) {
-      return Alert.alert("Missing fields", "Please fill in all fields.");
+      return Alert.alert("Please fill in all fields.");
     }
 
     setLoading(true);
@@ -61,12 +63,20 @@ const CreateBlog = () => {
   };
 
   return (
-    <KeyboardAvoidingView className="flex-1 bg-white px-4 pt-12">
-      <ScrollView>
+    <KeyboardAvoidingView className="flex-1 bg-[#fdddbd] px-4 pt-12 relative">
+      <TouchableOpacity
+        onPress={() => router.back()}
+        className="absolute top-10 left-4 z-50 flex-row items-center"
+      >
+        <Ionicons name="arrow-back" size={26} color="#448f49" />
+        <Text className="ml-2 text-[#448f49] text-base">Back</Text>
+      </TouchableOpacity>
+
+      <ScrollView className="flex-1 px-4 pt-24">
         <Text className="text-3xl font-bold text-[#448f49] mb-6">Create Blog</Text>
 
         <TextInput
-          className="border border-gray-300 p-4 rounded-lg mb-4 text-black"
+          className="border border-gray-300 p-4 rounded-lg mb-4 text-white bg-[#05212A]"
           placeholder="Title"
           placeholderTextColor="#aaa"
           value={title}
@@ -74,7 +84,7 @@ const CreateBlog = () => {
         />
 
         <TextInput
-          className="border border-gray-300 p-4 rounded-lg h-40 text-black"
+          className="border border-gray-300 p-4 rounded-lg h-40 text-white bg-[#05212A]"
           placeholder="Content"
           placeholderTextColor="#aaa"
           multiline
