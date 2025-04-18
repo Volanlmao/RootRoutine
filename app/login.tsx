@@ -50,7 +50,7 @@ const login = () => {
 
       <View className="relative w-[90%]">
         <TextInput
-          className="w-full p-4 rounded-lg bg-[#05212A] text-[#448f49] border border-[#448f49]"
+          className="w-full p-4 rounded-lg bg-[#05212A] text-white border border-[#448f49]"
           placeholder="Email..."
           placeholderTextColor="#9CA3AF"
           value={email}
@@ -60,7 +60,7 @@ const login = () => {
 
       <View className="relative w-[90%]">
         <TextInput
-          className="w-full p-4 rounded-lg bg-[#05212A] text-[#448f49] border border-[#448f49]"
+          className="w-full p-4 rounded-lg bg-[#05212A] text-white border border-[#448f49]"
           placeholder="Password..."
           placeholderTextColor="#9CA3AF"
           secureTextEntry={!showPassword}

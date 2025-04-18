@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import icons from "@/constants/icons";
 import {
   View,
   Text,
@@ -35,16 +36,18 @@ const Blog = () => {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-white">
+      <View className="flex-1 justify-center items-center bg-[#fdddbd]">
         <ActivityIndicator size="large" color="#448f49" />
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-white px-4 pt-10">
+    <View className="flex-1 bg-[#fdddbd] px-4 pt-12">
+      <Text className="text-2xl font-bold text-[#448f49]  mb-4">
+        <Image source={icons.logo} className="h-[15px] w-[15px]" /> RootRoutine
+      </Text>
       <View className="mb-4">
-        <Text className="text-3xl font-bold text-[#448f49] mb-2">Blog</Text>
         <Link href="/createBlog" asChild>
           <TouchableOpacity className="bg-[#448f49] px-4 py-3 rounded-lg">
             <Text className="text-white text-center font-semibold">
@@ -65,7 +68,7 @@ const Blog = () => {
         }
         renderItem={({ item }) => (
           <Link href={`/blog/${item.$id}`} asChild>
-            <TouchableOpacity className="bg-white rounded-lg shadow-md p-3 m-2 w-[47%]">
+            <TouchableOpacity className="bg-white rounded-lg shadow-xs p-3 m-2 w-[47%]">
               {item.img ? (
                 <Image
                   source={{ uri: item.img }}

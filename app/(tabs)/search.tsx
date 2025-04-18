@@ -46,15 +46,14 @@ export default function search() {
 
   return (
     <View className="flex-1 bg-[#fdddbd] px-4 pt-12">
-      
       <Text className="text-2xl font-bold text-[#448f49]  mb-4">
         <Image source={icons.logo} className="h-[15px] w-[15px]" /> RootRoutine
       </Text>
 
       <TextInput
-        className=" rounded-lg p-3 mb-4 bg-[#05212A]"
+        className="text-white rounded-lg p-3 mb-4 bg-[#448f49]"
         placeholder="Search for a plant..."
-        placeholderTextColor="#448f49"
+        placeholderTextColor="#ffffff"
         onChangeText={setQ}
         value={q}
       />

@@ -30,13 +30,13 @@ const index = () => {
         <Text className="text-[#05212A] text-[20px] mb-8 font-semibold">Nurture every <Text className="text-[#448f49] text-[20px] mb-8 font-semibold">leaf</Text></Text>
   
         <TouchableOpacity className="mt-2 bg-[#05212A] px-7 py-4 w-[90%] rounded-lg">
-          <Link href={"/sign-in"} className="text-[#448f49] text-xl text-center">
+          <Link href={"/sign-in"} className="text-gray-300 text-xl text-center">
             Create Account
           </Link>
         </TouchableOpacity>
   
         <TouchableOpacity className="mt-2 bg-[#05212A] px-7 py-4 w-[90%] rounded-lg">
-          <Link href={"/login"} className="text-[#448f49] text-xl text-center">
+          <Link href={"/login"} className="text-gray-300 text-xl text-center">
             Login
           </Link>
         </TouchableOpacity>
@@ -45,7 +45,7 @@ const index = () => {
           className="mt-2 bg-[#05212A] px-7 py-4 w-[90%] rounded-lg"
           onPress={handleSignInGoogle}
         >
-          <Text className="text-[#448f49] text-xl text-center">Login with Google</Text>
+          <Text className="text-gray-300 text-xl text-center">Login with Google</Text>
         </TouchableOpacity>
         
       </SafeAreaView>
