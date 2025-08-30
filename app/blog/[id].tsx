@@ -7,29 +7,67 @@ import {
   ActivityIndicator,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { database, databaseId, blogsId } from "@/backend/appwrite";
 import { Ionicons } from "@expo/vector-icons";
+import { useAppwriteContext } from "@/backend/appwriteContextProvider";
+import { getUser } from "@/backend/appwrite"; // Add this if not already imported
 
 const BlogDetail = () => {
   const { id } = useLocalSearchParams();
+
+const [user, setUser] = useState<any>(null);
+
   const [blog, setBlog] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const response = await database.getDocument(databaseId, blogsId, id as string);
-        setBlog(response);
-      } catch (error) {
-        console.error("Error fetching blog:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchBlogAndUser = async () => {
+    try {
+      const [blogResponse, userResponse] = await Promise.all([
+        database.getDocument(databaseId, blogsId, id as string),
+        getUser(),
+      ]);
+      setBlog(blogResponse);
+      setUser(userResponse);
+    } catch (error) {
+      console.error("Error fetching blog or user:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    if (id) fetchBlog();
-  }, [id]);
+  if (id) fetchBlogAndUser();
+}, [id]);
+
+
+  const handleDelete = async () => {
+  Alert.alert("Confirm", "Are you sure you want to delete this post?", [
+    {
+      text: "Cancel",
+      style: "cancel",
+    },
+    {
+      text: "Delete",
+      style: "destructive",
+      onPress: async () => {
+        try {
+          setDeleting(true);
+          await database.deleteDocument(databaseId, blogsId, id as string);
+          router.back();
+        } catch (error) {
+          console.error("Error deleting blog:", error);
+          Alert.alert("Error", "Could not delete the blog.");
+        } finally {
+          setDeleting(false);
+        }
+      },
+    },
+  ]);
+};
+
 
   if (loading) {
     return (
@@ -47,6 +85,8 @@ const BlogDetail = () => {
     );
   }
 
+  const isAuthor = user?.name === blog.author;
+
   return (
     <View className="flex-1 bg-[#fdddbd] relative">
       <TouchableOpacity
@@ -56,6 +96,16 @@ const BlogDetail = () => {
         <Ionicons name="arrow-back" size={26} color="#448f49" />
         <Text className="ml-2 text-[#448f49] text-base">Back</Text>
       </TouchableOpacity>
+
+      {isAuthor && (
+        <TouchableOpacity
+          onPress={handleDelete}
+          disabled={deleting}
+          className="absolute top-10 right-4 z-50"
+        >
+          <Ionicons name="trash" size={26} color="red" />
+        </TouchableOpacity>
+      )}
 
       <ScrollView className="px-4 pt-24">
         {blog.img && (

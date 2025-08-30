@@ -53,14 +53,5 @@ export async function getUser() {
         return null;
     }
 }
-// export async function seedBooks() {
-//     try {
-//         for (const book of newArrivals) {
-//             await database.createDocument(databaseId, booksCollection, ID.unique() ,book);
-//         }
-//         console.log("Books seeded successfully");
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+
 

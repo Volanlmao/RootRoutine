@@ -40,7 +40,6 @@ const SignIn = () => {
     try {
       const response = await account.create(ID.unique(), email, password, name);
       if (response) {
-        // redirect to main pagei inside tabs
         router.push("/(tabs)/main");
       }
     } catch (error) {

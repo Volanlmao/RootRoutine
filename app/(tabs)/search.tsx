@@ -45,7 +45,7 @@ export default function search() {
   }, [q]);
 
   return (
-    <View className="flex-1 bg-[#fdddbd] px-4 pt-12">
+    <View className="flex-1 bg-[#fdddbd] px-4 pt-16">
       <Text className="text-2xl font-bold text-[#448f49]  mb-4">
         <Image source={icons.logo} className="h-[15px] w-[15px]" /> RootRoutine
       </Text>
