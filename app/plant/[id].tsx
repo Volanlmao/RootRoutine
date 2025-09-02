@@ -71,7 +71,6 @@ export default function PlantDetail() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#fdddbd]">
-      {/* Back Button (unchanged) */}
       <TouchableOpacity
         onPress={() => router.back()}
         className="absolute top-10 left-4 z-50 flex-row items-center"
@@ -99,18 +98,15 @@ export default function PlantDetail() {
           {plantDetails.scientific_name?.join(", ")}
         </Text>
 
-        {/* Care Guide */}
         {careGuide ? (
-          <View className="mb-8">
-            <Text className="text-xl font-bold text-[#448f49] mb-2">
-              Description
-            </Text>
+          <View className="bg-white rounded-xl shadow-sm p-4 mb-6">
+            <Text className="text-xl font-bold text-[#448f49] mb-3">Care Guide</Text>
             {careGuide.section?.map((section: any, index: number) => (
-              <View key={index} className="mb-3">
-                <Text className="font-semibold text-[#448f49] mb-1">
+              <View key={index} className="mb-4">
+                <Text className="text-[#448f49] font-semibold mb-1">
                   {section.type}
                 </Text>
-                <Text className="text-gray-800">{section.description}</Text>
+                <Text className="text-gray-700 leading-6">{section.description}</Text>
               </View>
             ))}
           </View>
@@ -120,55 +116,71 @@ export default function PlantDetail() {
           </Text>
         )}
 
-        {/* Overview */}
-        <View className="mb-6">
+        <View className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <Text className="text-xl font-bold text-[#448f49] mb-2">Overview</Text>
-          <Text>Type: {plantDetails.type}</Text>
-          <Text>Cycle: {plantDetails.cycle}</Text>
-          <Text>Care Level: {plantDetails.care_level}</Text>
-          <Text>Growth Rate: {plantDetails.growth_rate}</Text>
+          <Text className="text-gray-800">Type: {plantDetails.type}</Text>
+          <Text className="text-gray-800">Cycle: {plantDetails.cycle}</Text>
+          <Text className="text-gray-800">Care Level: {plantDetails.care_level}</Text>
+          <Text className="text-gray-800">Growth Rate: {plantDetails.growth_rate}</Text>
           {plantDetails.dimensions?.min_value && (
-            <Text>
-              Size: {plantDetails.dimensions.min_value} -{" "}
-              {plantDetails.dimensions.max_value} {plantDetails.dimensions.unit}
+            <Text className="text-gray-800">
+              Size: {plantDetails.dimensions.min_value} - {plantDetails.dimensions.max_value}{" "}
+              {plantDetails.dimensions.unit}
             </Text>
           )}
         </View>
 
-        {/* Watering */}
-        <View className="mb-6">
+        <View className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <Text className="text-xl font-bold text-[#448f49] mb-2">Watering</Text>
-          <Text>Frequency: {plantDetails.watering}</Text>
+          <Text className="text-gray-800">Frequency: {plantDetails.watering}</Text>
         </View>
 
-        {/* Sunlight */}
-        <View className="mb-6">
+        <View className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <Text className="text-xl font-bold text-[#448f49] mb-2">Sunlight</Text>
-          <Text>{plantDetails.sunlight?.join(", ")}</Text>
+          <Text className="text-gray-800">{plantDetails.sunlight?.join(", ")}</Text>
         </View>
 
-        {/* Reproduction */}
-        <View className="mb-6">
+        <View className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <Text className="text-xl font-bold text-[#448f49] mb-2">Reproduction</Text>
-          <Text>Prune in: {plantDetails.pruning_month?.join(", ")}</Text>
-          <Text>Reproduction: {plantDetails.propagation?.join(", ")}</Text>
+          <Text className="text-gray-800">
+            Prune in: {plantDetails.pruning_month?.join(", ") || "N/A"}
+          </Text>
+          <Text className="text-gray-800">
+            Methods: {plantDetails.propagation?.join(", ") || "N/A"}
+          </Text>
         </View>
 
-        {/* Additional Info */}
-        <View className="mb-6">
-          <Text className="text-xl font-bold text-[#448f49] mb-2">
-            Additional Info
+        <View className="bg-white rounded-xl shadow-sm p-4 mb-6">
+          <Text className="text-xl font-bold text-[#448f49] mb-2">Additional Info</Text>
+          <Text className="text-gray-800">
+            Medicinal:{" "}
+            <Text className={plantDetails.medicinal ? "text-green-700 font-semibold" : "text-red-500"}>
+              {plantDetails.medicinal ? "Yes" : "No"}
+            </Text>
           </Text>
-          <Text>Medicinal: {plantDetails.medicinal ? "Yes" : "No"}</Text>
-          <Text>
-            Poisonous to humans: {plantDetails.poisonous_to_humans ? "Yes" : "No"}
+          <Text className="text-gray-800">
+            Poisonous to humans:{" "}
+            <Text className={plantDetails.poisonous_to_humans ? "text-red-500 font-semibold" : "text-green-700"}>
+              {plantDetails.poisonous_to_humans ? "Yes" : "No"}
+            </Text>
           </Text>
-          <Text>
-            Poisonous to pets: {plantDetails.poisonous_to_pets ? "Yes" : "No"}
+          <Text className="text-gray-800">
+            Poisonous to pets:{" "}
+            <Text className={plantDetails.poisonous_to_pets ? "text-red-500 font-semibold" : "text-green-700"}>
+              {plantDetails.poisonous_to_pets ? "Yes" : "No"}
+            </Text>
           </Text>
-          <Text>Indoor: {plantDetails.indoor ? "Yes" : "No"}</Text>
-          <Text>
-            Drought tolerant: {plantDetails.drought_tolerant ? "Yes" : "No"}
+          <Text className="text-gray-800">
+            Indoor Plant:{" "}
+            <Text className={plantDetails.indoor ? "text-green-700 font-semibold" : "text-red-500"}>
+              {plantDetails.indoor ? "Yes" : "No"}
+            </Text>
+          </Text>
+          <Text className="text-gray-800">
+            Drought Tolerant:{" "}
+            <Text className={plantDetails.drought_tolerant ? "text-green-700 font-semibold" : "text-red-500"}>
+              {plantDetails.drought_tolerant ? "Yes" : "No"}
+            </Text>
           </Text>
         </View>
       </ScrollView>
