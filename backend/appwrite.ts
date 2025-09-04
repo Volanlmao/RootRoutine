@@ -1,4 +1,4 @@
-import { Client, Account, Databases, OAuthProvider, ID, Avatars } from 'react-native-appwrite';
+import { Client, Account, Databases, OAuthProvider, ID, Avatars, AppwriteException } from 'react-native-appwrite';
 import * as Linking from "expo-linking";
 import { openAuthSessionAsync } from "expo-web-browser";
 
@@ -44,11 +44,16 @@ export async function login() {
 export async function getUser() {
     try {
         const result = await account.get();
-        if(result) {
-            return result
+        if (result) {
+            return result;
         }
         return null;
     } catch (error) {
+        // When no session exists, Appwrite throws a 401 "missing scopes" error.
+        // Treat this as a normal "not logged in" state without logging noise.
+        if (error instanceof AppwriteException && error.code === 401) {
+            return null;
+        }
         console.error(error);
         return null;
     }
