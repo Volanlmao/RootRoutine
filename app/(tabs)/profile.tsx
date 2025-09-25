@@ -36,13 +36,13 @@ const Profile = () => {
   }, []);
 
   const handleLogout = async () => {
-  try {
-    await account.deleteSession("current");
-    router.replace("/");
-  } catch (error) {
-    console.error("Logout failed:", error);
-  }
-};
+    try {
+      await account.deleteSession("current");
+      router.replace("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
 
   const handleNameUpdate = async () => {

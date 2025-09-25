@@ -18,14 +18,14 @@ export default function search() {
   const [loading, setLoading] = useState(false);
   const [popularPlants, setPopularPlants] = useState([]);
 
-  
+
   const searchPlants = async (input: string) => {
     try {
       setLoading(true);
       const response = await perenualApi.get("/species-list", {
-        params: { 
-          key: ApiToken, 
-          q: input 
+        params: {
+          key: ApiToken,
+          q: input
         },
       });
       setPlants(response.data.data);

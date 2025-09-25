@@ -82,7 +82,7 @@ const BlogDetail = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-[#fdddbd] relative">
-      {/* Back button */}
+
       <TouchableOpacity
         onPress={() => router.back()}
         className="absolute top-10 left-4 z-50 flex-row items-center"
@@ -91,7 +91,7 @@ const BlogDetail = () => {
         <Text className="ml-2 text-[#448f49] text-base">Back</Text>
       </TouchableOpacity>
 
-      {/* Delete button (if author) */}
+
       {isAuthor && (
         <TouchableOpacity
           onPress={handleDelete}
@@ -103,7 +103,7 @@ const BlogDetail = () => {
       )}
 
       <ScrollView className="px-4 pt-24" contentContainerStyle={{ paddingBottom: 40 }}>
-        {/* Blog Image */}
+
         {blog.img && (
           <Image
             source={{ uri: blog.img }}
@@ -112,7 +112,7 @@ const BlogDetail = () => {
           />
         )}
 
-        {/* Blog Content */}
+
         <View className="bg-white rounded-xl shadow-sm p-5 mb-6">
           <Text className="text-3xl font-bold text-[#448f49] mb-2">{blog.title}</Text>
           <Text className="text-sm text-gray-600 mb-1">by {blog.author}</Text>
