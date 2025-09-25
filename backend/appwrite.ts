@@ -16,21 +16,23 @@ export const blogsId = "68026d530022ba0f3080";
 
 export async function login() {
     try {
-        const redirectUrl = Linking.createURL("/");
-        const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUrl);
+        const redirectUrl = Linking.createURL("/"); // construieste url de redirectionare la app
+        const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUrl); // obtine url de autentificare
         if (!response) throw new Error("Create OAuth token failed");
 
-        const browserResult = await openAuthSessionAsync(response.toString(), redirectUrl);
+        // deschide browser catre url-ul OAuth si asteapta redirect inapoi la redirectUrl.
+        const browserResult = await openAuthSessionAsync(response.toString(), redirectUrl); 
         if (browserResult.type !== "success") {
             throw new Error("Create OAuth token failed");
         }
 
-        const url = new URL(browserResult.url);
-        const secret = url.searchParams.get("secret")?.toString();
-        const userId = url.searchParams.get("userId")?.toString();
-        
+        const url = new URL(browserResult.url); // parseaza url-ul de callback (are parametrii din Appwrite).
+        const secret = url.searchParams.get("secret")?.toString(); // extrage secret (token temporar Appwrite).
+        const userId = url.searchParams.get("userId")?.toString(); // extrage userId
+
         if (!userId || !secret) throw new Error("Create OAuth token failed");
 
+        // creeaza sesiune persistenta în Appwrite folosind perechea userId + secret
         const session = await account.createSession(userId, secret);
         if (!session) throw new Error("Failed to create session");
 
@@ -43,7 +45,7 @@ export async function login() {
 
 export async function getUser() {
     try {
-        const result = await account.get();
+        const result = await account.get(); // api Appwrite: return userul curent (daca sesiunea e valida)
         if (result) {
             return result
         }
