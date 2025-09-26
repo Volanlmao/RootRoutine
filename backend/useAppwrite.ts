@@ -13,27 +13,21 @@ interface UseAppwriteReturn<T, P> {
     refetch: (params?: P) => Promise<void>;
 }
 
-// Declară hook-ul generic.
+// Declara hook-ul generic.
 // T = tipul rezultatului promis de fn.
-// P = mapa cheie ->(string|number) pentru parametri.
-// Deconstructor: fn, params (default obiect gol tipat ca P), enabled=false
+// P = mapa cheie -> (string|number) pentru parametri.
+// Deconstructor: fn, params (default obiect gol scris ca P), enabled=false
 export const useAppwrite = <T, P extends Record<string, string | number>>({ fn, params = {} as P, enabled = false }: useAppwriteProps<T, P>): UseAppwriteReturn<T, P> => {
-    const [data, setData] = useState<T | null>(null); // Stoc pentru rezultatul curent
+    const [data, setData] = useState<T | null>(null); // stoc pentru rezultatul curent (null initial)
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    //Definește funcția memoizată de fetch:
-    // Resetează error, setează loading=true.
-    // Apelează fn cu fetchParams (forțat ca P).
-    // La succes: setData(result).
-    // La eșec: stochează eroarea ca string (vezi mai jos).
-    // În finally: loading=false.
-    // Dependențe: doar fn – corect pentru a reface funcția dacă se schimbă implementarea fn.
+    // functia de fetch:
     const fetchData = useCallback(async (fetchParams?: P) => {
-        setLoading(true);
+        setLoading(true); // Reseteaza error, seteaza loading=true.
         setError(null);
         try {
-            const result = await fn(fetchParams as P);
+            const result = await fn(fetchParams as P); // Apeleaza fn cu fetchParams (fortat ca P).
             setData(result);
         } catch (error) {
             setError(error as string);
@@ -41,7 +35,7 @@ export const useAppwrite = <T, P extends Record<string, string | number>>({ fn, 
             setLoading(false);
         }
 
-    }, [fn])
+    }, [fn]) // dependente: fn pentru a reface funcția daca se schimba implementarea fn.
 
     useEffect(() => {
         if (!enabled) {

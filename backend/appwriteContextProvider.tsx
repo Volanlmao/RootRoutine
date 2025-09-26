@@ -14,11 +14,11 @@ interface AppwriteContextType {
     loading: boolean;
     refetch: () => Promise<void>;
 }
-// creeaza contextul cu valoare implicita undefined pentru a detecta utilizarea in afara providerului
+// creeaza contextul cu valoare undefined pentru a detecta utilizarea in afara providerului
 const AppwriteContext = createContext<AppwriteContextType | undefined>(undefined);
 
-export const AppwriteContextProvider = ({ children }: { children: React.ReactNode }) => { // Componentă provider care ambalează subarborele UI
-    // Rulează hook-ul cu fn= getUser; extrage data și o redenumește user. error este returnat dar nu e expus în context 
+export const AppwriteContextProvider = ({ children }: { children: React.ReactNode }) => { // componenta care ambaleaza subarborele UI
+    // ruleaza hook-ul cu fn= getUser; extrage data di o redenumeste user
     const { data: user, loading, error, refetch } = useAppwrite({ fn: getUser });
 
     const isLoggedIn = !!user;
@@ -32,9 +32,9 @@ export const AppwriteContextProvider = ({ children }: { children: React.ReactNod
 
 }
 
-// Hook de consum al contextului pentru a evita importuri directe ale contextului. 
+// Hook de consum al contextului pentru a evita importuri directe ale contextului
 export const useAppwriteContext = () => {
-    const context = useContext(AppwriteContext); // Consumă contextul curent
+    const context = useContext(AppwriteContext); // Consuma contextul curent
     if (!context) {
         throw new Error('useAppwriteContext must be used within a AppwriteContextProvider');
     }

@@ -38,14 +38,14 @@ const SignIn = () => {
 
   const handleSignIn = async () => {
     try {
-      const response = await account.create(ID.unique(), email, password, name);
-      if (response) {
-        router.push("/(tabs)/main");
-      }
-    } catch (error) {
-      console.error(error);
+      await account.create(ID.unique(), email, password, name); // creaza user-ul
+      await account.createEmailPasswordSession(email, password); // creaza sesiune
+      router.replace("/(tabs)/main");
+    } catch (err: any) {
+      console.error(err);
     }
   };
+
 
   return (
     <KeyboardAvoidingView className="flex-1 bg-[#fdddbd]">
@@ -64,13 +64,12 @@ const SignIn = () => {
 
         <View className="w-full mb-4">
           <TextInput
-            className={`w-full p-4 rounded-lg bg-[#05212A] text-white border ${
-              name
+            className={`w-full p-4 rounded-lg bg-[#05212A] text-white border ${name
                 ? usernameValid
                   ? "border-green-500"
                   : "border-red-500"
                 : "border-gray-300 "
-            }`}
+              }`}
             placeholder="Username.."
             placeholderTextColor="#9CA3AF"
             value={name}
@@ -85,13 +84,12 @@ const SignIn = () => {
 
         <View className="w-full mb-4">
           <TextInput
-            className={`w-full p-4 rounded-lg bg-[#05212A] text-white border border-[#448f49] ${
-              email
+            className={`w-full p-4 rounded-lg bg-[#05212A] text-white border border-[#448f49] ${email
                 ? emailValid
                   ? "border-green-500"
                   : "border-red-500"
                 : "border-gray-300 "
-            }`}
+              }`}
             placeholder="Email.."
             placeholderTextColor="#9CA3AF"
             value={email}
@@ -105,13 +103,12 @@ const SignIn = () => {
         <View className="w-full mb-4">
           <View className="relative">
             <TextInput
-              className={`w-full p-4 rounded-lg bg-[#05212A] text-white border border-[#448f49]  ${
-                password
+              className={`w-full p-4 rounded-lg bg-[#05212A] text-white border border-[#448f49]  ${password
                   ? passwordValid
                     ? "border-green-500"
                     : "border-red-500"
                   : "border-gray-300 "
-              }`}
+                }`}
               placeholder="Password.."
               placeholderTextColor="#9CA3AF"
               value={password}
@@ -136,11 +133,10 @@ const SignIn = () => {
         </View>
 
         <TouchableOpacity
-          className={`w-full p-4 rounded-lg ${
-            usernameValid && passwordValid && emailValid
+          className={`w-full p-4 rounded-lg ${usernameValid && passwordValid && emailValid
               ? "bg-[#05212A]"
               : "bg-gray-500"
-          }`}
+            }`}
           onPress={handleSignIn}
           disabled={!usernameValid || !passwordValid || !emailValid}
         >

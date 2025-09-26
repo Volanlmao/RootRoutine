@@ -32,7 +32,7 @@ export async function login() {
 
         if (!userId || !secret) throw new Error("Create OAuth token failed");
 
-        // creeaza sesiune persistenta în Appwrite folosind perechea userId + secret
+        // creeaza sesiune in Appwrite folosind userId + secret
         const session = await account.createSession(userId, secret);
         if (!session) throw new Error("Failed to create session");
 
@@ -45,7 +45,7 @@ export async function login() {
 
 export async function getUser() {
     try {
-        const result = await account.get(); // api Appwrite: return userul curent (daca sesiunea e valida)
+        const result = await account.get(); // api Appwrite: return user-ul curent 
         if (result) {
             return result
         }
